@@ -11,7 +11,8 @@ pids
 logs
 results
 
-.project
+.project/
+.idea/
 npm-debug.log
 sys/temporary/cache/
 sys/temporary/session/
@@ -21,4 +22,5 @@ web/frontEnd/build/
 web/frontEnd/dist/
 web/frontEnd/node_modules/
 web/asset/
-.project
+web/topic/nodeJS_base/
+web/frontEnd/develop/admin/react-build/.module-cache/

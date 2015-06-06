@@ -1,98 +1,91 @@
 /** 博文列表页 **/
 .articleListPage{
-	margin: auto;
-	padding: 30px 0;
-    &:after{
-        content: '';
-        display: block;
-        height: 0;
-        overflow: hidden;
-        clear: both;
-    }
+  padding: 30px 0;
+  &:after{
+    content: '';
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+  }
+  .blank-content{
+      margin-top: 0;
+  }
+  .status{
+    height: 52px;
+  }
+  .l-loading-panel{
+    margin: 0;
+    padding: 15px 0;
+    max-width: none;
+  }
+  .l-loading{
+    width: 20px;
+    height: 20px;
+  }
 }
 .articleListPage-tags{
-    .content{
-        padding: 20px 0px 10px 10px;
+  .content{
+    padding: 20px 0px 10px 10px;
+  }
+  a{
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    height: 24px;
+    margin: 0 15px 10px 0;
+    line-height: 24px;
+    padding: 0 10px 0 20px;
+    border-radius: 0 4px 4px 0;
+    background: #ddd;
+    font-size: 12px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    .borderbox();
+    span{
+      opacity: .5;
+      padding: 0 0 0 5px;
     }
-    a{
-        position: relative;
-        display: inline-block;
-        max-width: 100%;
-        height: 24px;
-        margin: 0 15px 10px 0;
-        line-height: 24px;
-        padding: 0 10px 0 20px;
-        border-radius: 0 4px 4px 0;
-        background: #ddd;
-        font-size: 12px;
-        color: #333;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        .borderbox();
-		span{
-			opacity: .5;
-			padding: 0 0 0 5px;
-		}
-        &:before{
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-width: 12px 12px 12px 0;
-            border-color: #fff transparent #fff transparent;
-            border-style: solid;
-        }
-        &:after{
-            position: absolute;
-            content: '';
-            width: 4px;
-            height: 4px;
-            top: 10px;
-            left: 8px;
-            border-radius: 100%;
-            background: #fff;
-        }
-        &:hover{
-            background: #333;
-            color: #fff;
-        }
-        &.active{
-            background: #f70;
-            color: #fff;
-        }
+    &:before{
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-width: 12px 12px 12px 0;
+      border-color: #fff transparent #fff transparent;
+      border-style: solid;
     }
-}
-.articleListPage-main{
-    min-height: 500px;
-	padding-left: 220px;
+    &:after{
+      position: absolute;
+      content: '';
+      width: 4px;
+      height: 4px;
+      top: 10px;
+      left: 8px;
+      border-radius: 100%;
+      background: #fff;
+    }
+    &:hover{
+      background: #333;
+      color: #fff;
+    }
+    &.active{
+      background: #f70;
+      color: #fff;
+    }
+  }
 }
 .articleList {
-    @column-width: 300px;
-    -webkit-column-width:@column-width;
-    -moz-column-width:@column-width;
-    -o-colum-width:@column-width;
-    -webkit-column-gap:20px;
-    -moz-column-gap:20px;
-    -o-column-gap:20px;
-    line-height: 0;
-	.l-loading-panel{
-        display: inline-block;
-        width: 100%;
-		margin-top: 0;
-	}
+  position: relative;
 }
-
-
 .articleItem {
-    display: inline-block;
-    width: 100%;
-	margin-bottom: 20px;
-	overflow: hidden;
-    background: #fff;
-    
+  margin-bottom: 20px;
+  overflow: hidden;
+  background: #fff;
 }
 
 .artItCpt {
@@ -137,52 +130,101 @@
 }
 
 @media(max-width:780px){
-    .articleListPage{
-        width: auto;
-    }
-    .articleListPage-side,
-    .articleListPage-main{
-		position: static;
-        float: none;
-        width: auto;
-        max-width: 400px;
-        margin: auto;
-        padding-left: 0;
-    }
-	.articleListPage-tags{
-        position: static;
-        width: auto;
-        margin-bottom: 30px;
-    }
+  .articleListPage{
+    width: auto;
+  }
+  .articleListPage-side{
+    position: static;
+    float: none;
+    width: auto;
+    max-width: 400px;
+    margin: auto;
+    padding-left: 0;
+  }
+  .articleListPage-tags{
+    position: static;
+    width: auto;
+    margin-bottom: 30px;
+  }
 }
 
 
 
-
+/**
+ * 博文详情
+ *
+ **/
 
 .blogDetail{
-	padding: 30px 0 40px;
-}
-.blog_article {
-	margin-bottom: 20px;
-	overflow: hidden;
-	.cardShadow();
-    .caption {
-        text-align: center;
-        padding: 4em 1em 1.5em;
-        margin-bottom: 20px;
-        h1{
-            font-weight: normal;
-            line-height: 1.5;
-            margin-bottom: .5em;
-        }
-        p {
-            color: #666;
-        }
+  font-size: 14px;
+  .info-section{
+    text-align: center;
+    padding: 9em 0 12em;
+    h1{
+      margin: 0 1em .5em;
+      font-size: 2.5em;
+      font-weight: normal;
+      line-height: 1.3;
     }
+  }
+  .sns-share{
+    padding: 1em 0;
+    a{
+      padding: 0 15px;
+      font-size: 2.5em;
+      color: #666;
+      .transition(.15s,ease-out);
+      &:hover{
+        color: #f70;
+      }
+    }
+  }
+  .article-section {
+    padding-bottom: 50px;
+    border-top: 1px solid #f4f4f4;
+    background: #f4f4f4;
+    .caption{
+      margin-top: -2em;
+      padding: .8em 1em;
+      background: #fff;
+      border-bottom: 1px dashed #ddd;
+      h1{
+        font-size: 1.4em;
+        font-weight: normal;
+        line-height: 1em;
+      }
+    }
+    .article{
+      padding-bottom: 3em;
+      background: #fff;
+    }
+  }
+  .comments-section{
+    position: relative;
+    padding: 50px 0;
+    background: #666;
+    &:before{
+      position: absolute;
+      content: '';
+      top: -22px;
+      left: 50%;
+      margin-left: -60px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: transparent transparent #666;
+      border-width: 0 60px 22px;
+    }
+  }
+}
+
+@media(min-width:1000px){
+  .blogDetail{
+    font-size: 16px;
+  }
 }
 @media(min-width:1400px){
-    .article{
-        font-size: 16px;
-    }
+  .blogDetail{
+    font-size: 18px;
+  }
 }

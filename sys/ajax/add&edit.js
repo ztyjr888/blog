@@ -11,7 +11,9 @@ function add(parm,collection_name,callback){
 	
 	var method = mongo.start();
 
-	method.open({'collection_name':collection_name},function(err,collection){
+	method.open({
+    collection_name: collection_name
+  },function(err,collection){
 		if(err){
 			callback && callback(err);
 			return
@@ -34,8 +36,14 @@ function edit(parm,collection_name,callback){
 	
 	var method = mongo.start();
 	
-	method.open({'collection_name':collection_name},function(error,collection){
-		collection.update({'id':parm.id}, {$set:parm}, function(err,docs) {
+	method.open({
+    collection_name: collection_name
+  },function(error,collection){
+		collection.update({
+      id: parm.id
+    }, {
+      $set:parm
+    }, function(err,docs) {
 			if(err) {
 				callback && callback(err);
 			}else {
@@ -65,23 +73,13 @@ function filter_request(connect,callback){
 					data_filter['collection_name'] = 'article';
 					need_power = 3;
 					break
-				case 'opus' :
-					data_filter = filter_request.opus(data);
-					data_filter['collection_name'] = 'opus';
-					need_power = 9;
-					break
-				case 'blog_friend' :
-					data_filter = filter_request.blog_friend(data);
-					data_filter['collection_name'] = 'blog_friend';
-					need_power = 18;
-					break
 				case 'labs' :
 					data_filter = filter_request.labs(data);
 					data_filter['collection_name'] = 'labs';
 					need_power = 3;
 					break
 				default :
-					error = 'please input category [blog,opus,blog_friend]';
+					error = 'please input category [blog,labs]';
 			}
 			if(!session_this.power(need_power)){
 				error = 'no power';
@@ -95,42 +93,19 @@ function filter_request(connect,callback){
 filter_request.blog = function(data){
 	var error = null;
 	var param = {
-		'id' : data['id']||null,
-		'title':decodeURI(data['title']),
-		'cover':data['cover']||'',
-		'time_show':data['time_show']||new Date().getTime(),
-		'tags':data['tags'] ? data['tags'].split(/\s*\,\s*/) : [],
-		'author':data['author']||'',
-		'content':data['content'],
-		'intro':data['intro']||data['content'].slice(0,200),
+		id : data['id']||null,
+		title :decodeURI(data['title']),
+		cover: data['cover']||'',
+		time_show: data['time_show'] || new Date().getTime().toString(),
+		tags: data['tags'] ? data['tags'].split(/\s*\,\s*/) : [],
+		author: data['author']||'',
+		content: data['content'],
+		intro: data['intro'] || data['content'].slice(0,200),
 	};
 	if(!(param['title']&&param['content'])){
 		error = 'please insert complete code !';
 	}
 	return {error:error,data:param};
-}
-
-filter_request.opus = function(data){
-	var error = null;
-	var param = {
-		'id' : data['id']||'',
-		'title':decodeURI(data['title']),
-		'cover':data['cover']||'',
-		'opus_pic':data['opus_pic']||'',
-		'opus_time_create':data['opus_time_create']||new Date().getTime(),
-		'tags':data['tags']||'',
-		'content':data['content'],
-		'work_range':data['work_range'],
-		'online_url':data['online_url'],
-		'intro':data['intro']||data['content'].slice(0,200),
-	};
-	if(!(param['title']&&param['content'])){
-		error = 'please insert complete code !';
-	}
-	return {
-		'error' : error,
-		'data' : param
-	};
 }
 
 filter_request.labs = function(data){
@@ -155,28 +130,6 @@ filter_request.labs = function(data){
 	};
 }
 
-filter_request.blog_friend = function(data){
-	var error = null;
-	var param = {
-		'id' : data['id']||'',
-		'title':decodeURI(data['title']),
-		'cover':data['cover']||'',
-		'url':data['url']||'',
-		'isShow' :data['isShow']||1,//1:show;0:hidden
-		'discription':data['discription']
-	};
-	if(param['id'].length<2){
-		param['time_create'] = new Date().getTime();
-	}
-	if(!(param['title']&&param['url'])){
-		error = 'please insert complete code !';
-	}
-	return {
-		'error' : error,
-		'data' : param
-	};
-}
-
 //////////////////////////////////////////////////////
 exports.render = function (connect,app){
 
@@ -191,18 +144,18 @@ exports.render = function (connect,app){
 		var data = param['data'],
 			collection_name = param['collection_name'];
 		
-		if(data['id']&&data['id'].length>2){
+		if(data['id']&&data['id'].length > 2){
 			edit(data,collection_name,function(err){
 				if(err){
 					connect.write('json',{
-						'code':2,
-						'msg': 'edit fail !'
+						code:2,
+						msg: 'edit fail !'
 					});
 				}else{
 					connect.write('json',{
-						'code':1,
-						'id' : data.id,
-						'msg':'edit success !'
+						code: 1,
+						id : data.id,
+						msg: 'edit success !'
 					});
 					app.cache.clear();
 				}
@@ -211,14 +164,14 @@ exports.render = function (connect,app){
 			add(data,collection_name,function(err){
 				if(err){
 					connect.write('json',{
-						'code':2,
-						'msg': 'edit fail !'
+						code: 2,
+						msg: 'edit fail !'
 					});
 				}else{
 					connect.write('json',{
-						'code':1,
-						'id' : data.id,
-						'msg':'edit success !'
+						code: 1,
+						id : data.id,
+						msg: 'edit success !'
 					});
 					app.cache.clear();
 				}

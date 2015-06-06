@@ -23,9 +23,10 @@ function getUserInfo(id,callback){
 //增加一条评论
 module.exports = function(data,callback){
 	var item = {
-		'content' : utils.encodeHtml(data.content),
-		'time' : new Date().getTime(),
-		'cid' : data.cid
+		content : utils.encodeHtml(data.content),
+		time : new Date().getTime(),
+		cid : data.cid,
+    reply_for_id : data.reply_for_id
 	};
 	if(!item.cid){
 		callback && callback('missing argument : cid');
@@ -40,7 +41,13 @@ module.exports = function(data,callback){
 	
 	
 	var method = mongo.start();
-	method.open({'collection_name':'comments'},function(err,collection){
+	method.open({
+    collection_name: 'comments'
+  },function(err,collection){
+    if(err){
+      callback && callback(err);
+      return
+    }
 		collection.insert(item,function(err,result){
 			if(err) {
 				callback && callback(err);

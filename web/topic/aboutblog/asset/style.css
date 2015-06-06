@@ -144,6 +144,13 @@ body {
   font-size: 16px;
   background: #333;
 }
+h1 {
+  font-family: Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Tohoma, Arial;
+}
+.wrap {
+  max-width: 850px;
+  margin: auto;
+}
 .header {
   padding: 100px 20px 140px;
   text-align: center;
@@ -156,7 +163,6 @@ body {
   line-height: 1em;
   font-size: 2.2em;
   font-weight: normal;
-  font-family: Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Tohoma, Arial;
 }
 .header p {
   font-size: .75em;
@@ -195,10 +201,6 @@ body {
 }
 .intro-structrue {
   background: #fff;
-}
-.intro-structrue .article {
-  max-width: 800px;
-  margin: auto;
 }
 .intro-structrue .article li a {
   opacity: .5;
@@ -250,6 +252,41 @@ body {
   .structure svg {
     height: 530px;
   }
+}
+.index-views-intro {
+  margin-bottom: 200px;
+  padding: 70px 0;
+  overflow: auto;
+  text-align: center;
+  font-size: 16px;
+  background: url(wave.gif) #fafafa;
+}
+.index-views-intro img {
+  display: block;
+  width: 100%;
+  max-width: 740px;
+  min-width: 600px;
+  margin: auto;
+  color: #000;
+}
+.index-views-intro h1 {
+  margin-bottom: .4em;
+  font-size: 2em;
+  font-weight: normal;
+  font-size: 32px;
+}
+.index-views-intro p {
+  line-height: 1.6;
+  font-size: .8em;
+  color: #000;
+}
+.index-views-intro p a {
+  padding-left: .8em;
+  color: #555;
+  text-decoration: underline;
+}
+.index-views-intro p a:hover {
+  color: #000;
 }
 .tongji {
   height: 0;

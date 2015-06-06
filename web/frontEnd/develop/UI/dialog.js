@@ -2,7 +2,7 @@
  * @author bh-lay
  * 
  * @github https://github.com/bh-lay/UI
- * @modified 2015-3-9 13:13
+ * @modified 2015-5-19 10:37
  * 
  **/
 
@@ -44,13 +44,13 @@
 		confirm_tpl = '<div class="UI_confirm"><div class="UI_confirm_text"><%=text %></div></div>',
 		ask_tpl = '<div class="UI_ask"><div class="UI_ask_text"><%=text %></div><input class="UI_ask_key" type="text" name="UI_ask_key"/></div>',
 		confirmBar_tpl = '<div class="UI_pop_confirm"><a href="javascript:;" class="UI_pop_confirm_ok"><%=confirm %></a><a href="javascript:;" class="UI_pop_confirm_cancel"><%=cancel %></a></div>',
-		plane_tpl = '<div class="UI_plane"></div>',
 		prompt_tpl = '<div class="UI_prompt"><div class="UI_cnt"></div></div>',
 		cover_tpl = '<div class="UI_cover"><div class="UI_cnt"></div><a href="javascript:;" class="UI_close UI_coverClose">×</a></div>',
 		select_tpl = '<div class="UI_select"><div class="UI_select_body UI_cnt"><% if(title){ %><div class="UI_selectCpt"><h3><%=title %></h3><% if(intro){ %><p><%=intro %></p><% } %></div><% } %><div class="UI_selectCnt"><% for(var i=0,total=list.length;i<total;i++){ %><a class="UI_select_btn" href="javascript:;"><%=list[i] %></a><% } %></div></div><div class="UI_selectCancel"><a class="UI_select_btn" href="javascript:;">取消</a></div></div>',
-		popCSS = 'body{position:relative}.UI_lawyer{position:absolute;top:0;left:0;z-index:4999;width:100%;height:0;overflow:visible;font-family:"Microsoft Yahei"}.UI_lawyer.isAnimation{height:auto;bottom:0;overflow:hidden}.UI_lawyer a,.UI_lawyer a:hover,.UI_lawyer a:active{outline:none;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent}.UI_mask{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.6;filter:alpha(opacity=60);display:none}.UI-blur{-webkit-filter:blur(3px)}.UI_pop{width:200px;position:absolute;top:400px;left:300px;background:#fff;box-shadow:2px 3px 10px rgba(0,0,0,0.6)}.UI_pop_cpt{position:relative;height:36px;line-height:36px;overflow:hidden;border-bottom:1px solid #ebebeb;color:#777;font-size:16px;text-indent:15px;cursor:default}.UI_pop .UI_cnt{position:relative;min-height:100px;overflow:auto}.UI_pop_close{display:block;position:absolute;top:0;right:0;width:40px;height:36px;text-align:center;color:#ddd;font:bold 20px/36px "simsun";transition:0.1s}.UI_pop_close:hover{color:#888}.UI_pop_close:active{color:#222}.UI_confirm{width:300px;position:absolute;background:#fff;overflow:hidden;box-shadow:2px 3px 10px rgba(0,0,0,0.6)}.UI_confirm_text{padding:30px 10px 20px;line-height:26px;text-align:center;font-size:20px;color:#333}.UI_ask{width:300px;position:absolute;background:#fff;overflow:hidden;box-shadow:2px 3px 10px rgba(0,0,0,0.6)}.UI_ask_text{padding:25px 10px 15px;line-height:26px;text-align:center;font-size:18px;color:#333}.UI_ask input{display:block;margin:0 auto 15px;height:30px;padding:4px 4px;line-height:22px;box-sizing:border-box;width:90%}.UI_pop_confirm{overflow:hidden;text-align:center;border-top:1px solid #ddd;white-space:nowrap}.UI_pop_confirm a{display:inline-block;width:50%;font-size:14px;line-height:36px;color:#03f;transition:0.15s}.UI_pop_confirm a:hover{background:#eee}.UI_pop_confirm_ok{border-right:1px solid #ddd}.UI_plane{width:200px;position:absolute;top:400px;left:300px}.UI_prompt{position:absolute;width:240px;background:#fff;box-shadow:2px 2px 10px rgba(0,0,0,0.5)}.UI_prompt .UI_cnt{padding:30px 10px;font-size:18px;color:#333;text-align:center}.UI_cover{position:absolute;top:0;width:100%;height:100px;max-width:100%}.UI_cover .UI_cnt{position:relative;width:100%;height:100%;background:#fff;overflow:auto}.UI_coverClose{display:block;position:absolute;top:10px;right:20px;width:30px;height:30px;text-align:center;color:#aaa;font:18px/30px "simsun";background:#eee;border-radius:15px;border:1px solid #aaa}.UI_coverClose:hover{background:#333;color:#fff;transition:0.2s}.UI_select{position:absolute;width:200px;box-shadow:2px 2px 2px rgba(0,0,0,0.6)}.UI_select a{display:block;height:40px;line-height:40px;text-align:center;color:#03f;font-size:16px}.UI_select_body{overflow:hidden;background:#fff}.UI_selectCpt{padding:8px 0}.UI_selectCpt h3,.UI_selectCpt p{margin:0;font-size:15px;line-height:18px;text-align:center;color:#aaa;font-weight:normal}.UI_selectCpt p{font-size:12px}.UI_selectCnt a{height:34px;line-height:34px;font-size:14px;border-top:1px solid #ddd}.UI_selectCnt a:hover{background:#eee}.UI_selectCancel{display:none}@media(max-width:640px){.UI_select{position:fixed;bottom:0;width:100%;padding-bottom:10px}.UI_select_body, .UI_selectCancel{margin:0 10px;border-radius:8px}.UI_select_body{margin:0 10px 10px}.UI_selectCancel{display:block;background:#fff}.UI_lawyer a:hover{background:none}}.UI_ie678 .UI_pop,.UI_ie678 .UI_confirm,.UI_ie678 .UI_ask,.UI_ie678 .UI_prompt,.UI_ie678 .UI_select{outline:3px solid #ccc}';
+		popCSS = 'body{position:relative}.UI_lawyer{position:absolute;top:0;left:0;z-index:4999;width:100%;height:0;overflow:visible;font-family:"Microsoft Yahei"}.UI_lawyer.isAnimation{height:auto;bottom:0;overflow:hidden}.UI_lawyer a,.UI_lawyer a:hover,.UI_lawyer a:active{outline:none;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent}.UI_mask{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.6;filter:alpha(opacity=60);display:none}.UI-blur{-webkit-filter:blur(3px)}.UI_pop{width:200px;position:absolute;top:400px;left:300px;background:#fff;box-shadow:2px 3px 10px rgba(0,0,0,0.6)}.UI_pop_cpt{position:relative;height:36px;line-height:36px;overflow:hidden;border-bottom:1px solid #ebebeb;color:#777;font-size:16px;text-indent:15px;cursor:default}.UI_pop .UI_cnt{position:relative;min-height:100px;overflow:auto}.UI_pop_close{display:block;position:absolute;top:0;right:0;width:40px;height:36px;text-align:center;color:#ddd;font:bold 20px/36px "simsun";transition:0.1s}.UI_pop_close:hover{color:#888}.UI_pop_close:active{color:#222}.UI_confirm{width:300px;position:absolute;background:#fff;overflow:hidden;box-shadow:2px 3px 10px rgba(0,0,0,0.6)}.UI_confirm_text{padding:30px 10px 20px;line-height:26px;text-align:center;font-size:20px;color:#333}.UI_ask{width:300px;position:absolute;background:#fff;overflow:hidden;box-shadow:2px 3px 10px rgba(0,0,0,0.6)}.UI_ask_text{padding:25px 10px 15px;line-height:26px;text-align:center;font-size:18px;color:#333}.UI_ask input{display:block;margin:0 auto 15px;height:30px;padding:4px 4px;line-height:22px;box-sizing:border-box;width:90%}.UI_pop_confirm{overflow:hidden;text-align:center;border-top:1px solid #ddd;white-space:nowrap}.UI_pop_confirm a{display:inline-block;width:50%;font-size:14px;line-height:36px;color:#03f;transition:0.15s}.UI_pop_confirm a:hover{background:#eee}.UI_pop_confirm_ok{border-right:1px solid #ddd}.UI_prompt{position:absolute;width:240px;background:#fff;box-shadow:2px 2px 10px rgba(0,0,0,0.5)}.UI_prompt .UI_cnt{padding:30px 10px;font-size:18px;color:#333;text-align:center}.UI_cover{position:absolute;top:0;width:100%;height:100px;max-width:100%}.UI_cover .UI_cnt{position:relative;width:100%;height:100%;background:#fff;overflow:auto}.UI_coverClose{display:block;position:absolute;top:10px;right:20px;width:30px;height:30px;text-align:center;color:#aaa;font:18px/30px "simsun";background:#eee;border-radius:15px;border:1px solid #aaa}.UI_coverClose:hover{background:#333;color:#fff;transition:0.2s}.UI_select{position:absolute;width:200px;box-shadow:2px 2px 2px rgba(0,0,0,0.6)}.UI_select a{display:block;height:40px;line-height:40px;text-align:center;color:#03f;font-size:16px}.UI_select_body{overflow:hidden;background:#fff}.UI_selectCpt{padding:8px 0}.UI_selectCpt h3,.UI_selectCpt p{margin:0;font-size:15px;line-height:18px;text-align:center;color:#aaa;font-weight:normal}.UI_selectCpt p{font-size:12px}.UI_selectCnt a{height:34px;line-height:34px;font-size:14px;border-top:1px solid #ddd}.UI_selectCnt a:hover{background:#eee}.UI_selectCancel{display:none}@media(max-width:640px){.UI_select{position:fixed;bottom:0;width:100%;padding-bottom:10px}.UI_select_body, .UI_selectCancel{margin:0 10px;border-radius:8px}.UI_select_body{margin:0 10px 10px}.UI_selectCancel{display:block;background:#fff}}.UI_ie678 .UI_pop,.UI_ie678 .UI_confirm,.UI_ie678 .UI_ask,.UI_ie678 .UI_prompt,.UI_ie678 .UI_select{outline:3px solid #ccc}';
 	
-	var isIE67 = isIE678 = false;
+	var isIE67,
+      isIE678;
 	if(navigator.appName == "Microsoft Internet Explorer"){
 		var version = navigator.appVersion.split(";")[1].replace(/[ ]/g,"");
 		if(version == "MSIE6.0" || version == "MSIE7.0"){
@@ -89,8 +89,9 @@
 		//"CSS1Compat"
 		docDom = document.documentElement;
 	}
+  
+  //重新计算浏览器窗口尺寸
 	function refreshSize(){
-		//重新计算窗口尺寸
 		private_scrollTop = docDom.scrollTop == 0 ? private_body.scrollTop : docDom.scrollTop;
 		private_winH = window.innerHeight || document.documentElement.clientHeight;
 		private_winW = window.innerWidth || document.documentElement.clientWidth;
@@ -117,13 +118,20 @@
 			}
 		}
 	}
-	//最后一个有蒙层的对象的zIndex值，无则返回0
+	//最后一个有蒙层的对象的zIndex值，
 	function last_has_mask_zIndex(){
+    //逆序遍历所有显示中的对象
 		for(var i= active_objs.length-1;i>=0;i--){
-			if(active_objs[i]._easyClose){
-				return getCSS(active_objs[i].dom,'zIndex');
+      //判断是否含有蒙层
+			if(active_objs[i]._mask){
+        var zIndex = getCSS(active_objs[i].dom,'zIndex');
+        //是否为数值
+        if(isNum(zIndex)){
+          return parseInt(zIndex);
+        }
 			}
 		}
+    // 无则返回 0
 		return 0;
 	}
 	//调整正在显示的对象的位置
@@ -313,7 +321,8 @@
 			}
 		});
 	}
-	var blur = removeBlur = null;
+	var blur,
+      removeBlur;
 	if(utils.supports('-webkit-filter')){
 		blur = function (){
 			travelRootElements(function(dom){
@@ -405,6 +414,7 @@
 		var time = 100;
 		//向全局记录的对象内添加对象
 		active_objs.push(me);
+    
 		//显示蒙层（内部判断是否显示）
 		showMask.call(me);
 		
@@ -718,34 +728,6 @@
 	};
 	PROMPT.prototype.adapt = ADAPT;
 
-	/**
-	 *	PLANE 
-	 */
-	function PLANE(param){
-		var me = this;
-		var param = param || {};
-		
-		me.closeFn = param.closeFn || null;
-		me.dom = utils.createDom(plane_tpl)[0];
-		me._from = param.from || null;
-		
-		//insert html
-		me.dom.innerHTML = param.html || '';
-		
-		setCSS(me.dom,{
-			width : param.width || 240,
-			height : param.height || null,
-			top : isNum(param.top) ? param.top : 300,
-			left : isNum(param.left) ? param.left : 800
-		});
-		private_allCnt.appendChild(me.dom);
-		//处理是否易于关闭
-		easyCloseHandle.call(me,true);
-		openAnimation.call(me);
-	}
-	PLANE.prototype.close = closeAnimation(200);
-	PLANE.prototype.adapt = ADAPT;
-
 	/***
 	 * 全屏弹框
 	 * COVER 
@@ -773,7 +755,6 @@
 			width : isNum(param.width) ? Math.min(private_winW,param.width) : private_winW,
 			height : isNum(param.height) ? Math.min(private_winH,param.height) : private_winH
 		};
-		console.log(cssObj);
 		//水平定位
 		if(isNum(param.right)){
 			cssObj.right = param.right;
@@ -794,7 +775,7 @@
 		private_allCnt.appendChild(me.dom);
 		
 		//处理是否易于关闭
-		easyCloseHandle.call(me,true);
+		easyCloseHandle.call(me,param.easyClose,true);
 		openAnimation.call(me,function(){
 			setCSS(private_body,{
 				overflowY : 'hidden'
@@ -904,9 +885,6 @@
 		},
 		prompt : function(txt,time,param){
 			return new PROMPT(txt,time,param);
-		},
-		plane : function(){
-			return new PLANE(arguments[0]);
 		},
 		cover : function(){
 			return new COVER(arguments[0]);
@@ -1090,7 +1068,7 @@
 		//记录初始transition值
 		var transition_start = getStyle(elem,'transition');
 		var cssSet = clone(cssObj,{
-			'transition' : durtime + 'ms ' + animType
+			transition: durtime + 'ms ' + animType
 		});
 		
 		//开启3d加速
@@ -1107,7 +1085,7 @@
 			elem.removeEventListener("webkitTransitionEnd",transitionFn, true);
 			//还原transition值
 			setCss(elem,{
-				'transition' : transition_start || 'all 0s'
+				transition: transition_start || 'all 0s'
 			});
 			onEnd && onEnd.call(elem);
 		}
@@ -1450,11 +1428,11 @@
 		fadeIn : function (DOM,time,fn){
 			var op = getStyle(DOM,'opacity');
 			setCss(DOM,{
-				'opacity' : 0,
-				'display' : 'block'
+				opacity: 0,
+				display: 'block'
 			});
 			animation(DOM,{
-				'opacity' : op
+				opacity: op
 			}, time, function(){
 				fn && fn.call(DOM);
 			});
@@ -1463,7 +1441,7 @@
 		fadeOut : function (DOM,time,fn){
 			var op = getStyle(DOM,'opacity');
 			animation(DOM,{
-				'opacity' : 0
+				opacity: 0
 			}, time,function(){
 				DOM.style.opacity = op;
 				DOM.style.display = 'none';

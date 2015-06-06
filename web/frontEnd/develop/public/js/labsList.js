@@ -3,16 +3,7 @@
  *  
  */
 define(function(require,exports){
-	
-	var temp = ['<div class="grid-row">{@each list as it}<div class="grid-box">',
-        '<a href="/labs/${it.name}" title="${it.title}" class="lab_item">',
-            '<div class="cover" style="background-image:url(${it.cover})"><i class="l-icon l-icon-link"></i></div>',
-            '<div class="info">',
-                '<h4 class="title">${it.title}</h4>',
-                '<p>${it.intro}</p>',
-            '</div>',
-	   '</a>',
-    '</div>{@/each}</div>'].join('');
+  var empty_tpl = '<div class="blank-content"><p>啥都木有</p></div>';
 	
 	var limit = 20,
 		 skip = 0,
@@ -28,7 +19,11 @@ define(function(require,exports){
 				'limit' : limit
 			},
 			'success' :function(data){
-				count = data['count'];
+				if(data.code == 500){
+          callback && callback(500);
+          return;
+        }
+        count = data['count'];
 				skip += limit;
 				
 				var list = data['list'];
@@ -41,18 +36,25 @@ define(function(require,exports){
 						'height': 400
 					});
 				}
-				callback&&callback(list);
+				callback&&callback(null,list);
 			}
 		});
 	};
 	return function(dom,param){
+		var base_tpl = $('#tpl_labs_list_base').html();
 		skip = 0;
-        dom.html('<div class="labsList"><div class="l-loading-panel"><span class="l-loading"></span><p>正在加载数据</p></div></div>');
-		getData(function(list){
-			var this_html = juicer(temp,{
-                'list' : list
-            });
-            dom.find('.labsList').html(this_html);
+    dom.html(base_tpl);
+		getData(function(err,list){
+      var this_html;
+      if(err){
+        this_html = empty_tpl;
+      }else{
+        var temp = $('#tpl_labs_list_item').html();
+        this_html = juicer(temp,{
+            list : list
+        });
+      }
+      dom.find('.labsList').html(this_html);
 		});
 	};
 });

@@ -9,10 +9,16 @@ var converter = new showdown.converter();
 
 function list_page(app,callback){
 	var method = mongo.start();
-	method.open({'collection_name' : 'labs'},function(err,collection){
+	method.open({
+    collection_name : 'labs'
+  },function(err,collection){
+    if(err){
+      callback && callback(err);
+      return
+    }
 		collection.find({}, {limit:15}).sort({id:-1}).toArray(function(err, docs) {
 			for(var i in docs){
-				docs[i].cover = (docs[i].cover && docs[i].cover[0] == '/') ? app.config.img_domain + docs[i].cover : docs[i].cover;
+				docs[i].cover = (docs[i].cover && docs[i].cover[0] == '/') ? app.config.frontEnd.img_domain + docs[i].cover : docs[i].cover;
 			}
 			method.close();
 			callback && callback(null,docs);
@@ -24,8 +30,13 @@ function get_detail(lab_name,callback){
 	//get template
 	var method = mongo.start();
 
-	method.open({'collection_name':'labs'},function(err,collection){
-
+	method.open({
+    collection_name: 'labs'
+  },function(err,collection){
+    if(err){
+      callback && callback(err);
+      return
+    }
 		collection.find({'name':lab_name}).toArray(function(err, docs) {
 			method.close();
 			if(arguments[1].length==0){
@@ -47,12 +58,18 @@ exports.list = function (connect,app){
 		connect.write('html',200,this_cache);
 	},function(save_cache){
 		list_page(app,function(err,list){
+      if(err){
+        app.views('system/mongoFail',{},function(err,html){
+          connect.write('html',500,html);
+        })
+        return;
+      }
 			//获取视图
 			app.views('labsList',{
-				'title' : '实验室',
-				'keywords' : '剧中人,bh-lay,网站建设,网页设计,设计师',
-				'description' : '小剧客栈是剧中人精心营造的一个向广大设计爱好者、喜欢剧中人开放的博客，小剧希望用设计师鞭策自己，愿意和你共同分享，一起进步！',
-				'list' : list
+				title : '实验室_小剧客栈',
+        keywords : '造轮子,组件,实验室,剧中人,小剧客栈,前端工程师,设计师,nodeJS',
+        description : '剧中人造轮子的基地，汇集小剧开发的部分组件，孕育优秀代码的实验室！',
+				list : list
 			},function(err,html){
 				save_cache(html);
 			});
@@ -72,12 +89,12 @@ exports.detail = function (connect,app,lab_name){
 			}
 			//获取视图
 			app.views('labsDetail',{
-				'title' : data.title,
-				'keywords' : data.tags,
-				'description' : data.intro,
-				'content' : data.content,
-				'git_full_name' : data.git_full_name,
-				'demo_url' : data.demo_url
+				title : data.title + '_小剧客栈',
+				keywords : data.tags,
+				description : data.intro,
+				content : data.content,
+				git_full_name : data.git_full_name,
+				demo_url : data.demo_url
 			},function(err,html){
 				if(err){
 					connect.write('error','怎么坏掉了呢！');

@@ -57,7 +57,6 @@ window.L = window.L || {};
 }());
 
 define(function (require, exports) {
-    require('public/js/jquery');
 	require('public/js/juicer.js');
 	require('util/lofox_1_0.js');
 	require('UI/dialog.js');
@@ -74,11 +73,9 @@ define(function (require, exports) {
         index : require('public/js/index.js'),
         blogList : require('public/js/blogList.js'),
         blogDetail : require('public/js/blogDetail.js'),
-        opusList : require('public/js/opusList.js'),
-        opusDetail : require('public/js/opusDetail.js'),
         labsList : require('public/js/labsList.js'),
         bless : require('public/js/bless.js'),
-        comments : require('comments/index.js')
+        comments : require('public/comments/index.js')
     };
 	L.push = function (url) {
 		lofox.push(url);
@@ -86,77 +83,134 @@ define(function (require, exports) {
 	L.refresh = function () {
 		lofox.refresh();
 	};
-    //模块替换
-    L.tplModule = function(txt){
-        return (txt && txt.length) ? txt.replace(/\[\-(\w+)\-\]/g,function(a,key){
-            return $('#module_' + key).html() || '';
-        }) : '';
-    };
-
-    //配置弹出层
-    UI.config.zIndex(2000);
-    
-    //显示背景图
-    if (L.supports.css('backgroundSize') && !L.isMobileBrowser) {
-        new L.gallery({
-            'delay' : 50000,
-            'data' : [
-                {'src': app_config.frontEnd_base + 'public/images/gallery/bamboo.jpg', 'alt': '竹子'},
-                {'src': app_config.frontEnd_base + 'public/images/gallery/coast.jpg', 'alt': '江边'}
-            ]
-        });
-    }
-    //开始导航
-    L.nav();
-    //渐隐加载遮罩
-    setTimeout(function () {
-        $('.app_mask').fadeOut(500, function () {
-            $(this).remove();
-        });
-    }, 500);
-    
-    
+  //模块替换
+  L.tplModule = function(txt){
+    return (txt && txt.length) ? txt.replace(/\[\-(\w+)\-\]/g,function(a,key){
+      return $('#module_' + key).html() || '';
+    }) : '';
+  };
 	/**
-	 * 检测链接是为提供给js使用的地址
-     *   无地址、 javascript:: 、javascript:void(0)、#
+	 * @param (timestamp/Date,'{y}-{m}-{d} {h}:{m}:{s}')
+	 * @param (timestamp/Date,'{y}-{mm}-{dd} {hh}:{mm}:{ss}')
+	 * 
+	 * y:year
+	 * m:months
+	 * d:date
+	 * h:hour
+	 * i:minutes
+	 * s:second
+	 * a:day
+	 */
+	L.parseTime = function (time,format){
+		if(arguments.length==0){
+			return null;
+		}
+		var format = format ||'{y}-{m}-{d} {h}:{i}:{s}';
+
+		if(typeof(time) == "object"){
+			var date = time;
+		}else{
+			var date = new Date(parseInt(time));
+		}
+
+		var formatObj = {
+			y : date.getYear()+1900,
+			m : date.getMonth()+1,
+			d : date.getDate(),
+			h : date.getHours(),
+			i : date.getMinutes(),
+			s : date.getSeconds(),
+			a : date.getDay(),
+		};
+
+		var time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g,function(result,key){
+			var value = formatObj[key];
+			if(result.length > 3 && value < 10){
+				value = '0' + value;
+			}
+			return value || 0;
+		});
+		return time_str;
+	}
+  //配置弹出层
+  UI.config.zIndex(2000);
+
+  //显示背景图
+  if (L.supports.css('backgroundSize') && !L.isMobileBrowser) {
+    new L.gallery({
+      delay : 50000,
+      data : [
+        {
+          src : app_config.frontEnd_base + 'public/images/gallery/bamboo.jpg',
+          alt : '竹子'
+        },
+        {
+          src : app_config.frontEnd_base + 'public/images/gallery/coast.jpg',
+          alt : '江边'
+        }
+      ]
+    });
+  }
+  //开始导航
+  L.nav();
+  //渐隐加载遮罩
+  $('.app_mask').addClass('app_mask_out'); 
+  setTimeout(function () {
+    $('.app_mask').remove();
+  }, 1000);
+  
+	/**
+	 * 检测链接是否为提供给js使用的地址
+   *   无地址、 javascript:: 、javascript:void(0)、#
 	 **/
 	function hrefForScript(href){
 		return (href.length == 0 || href.match(/^(javascript\s*\:|#)/)) ? true : false;
 	}
-    /**
-     * 分享功能
-     *  data-text data-url data-title data-img data-shareto
-     */
-    $('body').on('click','.sns-share a',function(){
-        var $data = $(this).parents('.sns-share'),
-            url = $data.attr('data-url') || location.href,
-            text = encodeURIComponent($data.attr('data-text')) || document.title,
-            title = encodeURIComponent($data.attr('data-title')),
-            img = $data.attr('data-img'),
-            shareto = $(this).attr('data-shareto');
-        var share_url={
-            'weibo':'http://service.weibo.com/share/share.php?title='+text+'+&url='+url+'&source=bookmark&appkey=2861592023&searchPic=false&pic='+img,
-            'qzone':'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?summary='+text+'&url='+url+'&title='+ title+'&pics='+img+'&desc='+text
-        };
-        share_url[shareto] && window.open(share_url[shareto]);
-        return false;
-    })
-    //处理火狐，js链接新窗口打开问题，感谢 @紫心蕊 
-    .on('click','a',function(e){
-        if(hrefForScript($(this).attr('href'))){
-            e.preventDefault();
-        }
-    })
-    //nicescrol
-    .niceScroll({
-        zindex : 2001,
-        cursorborder: '1px solid rgba(255,255,255,.2)',
-        mousescrollstep: 60,
-        railpadding: {
-            right : 1
-        },
-        bouncescroll: true
-    });
+  /**
+   * 分享功能
+   *  data-text data-url data-title data-img data-shareto
+   */
+  $('body').on('click','.sns-share a',function(){
+    var $data = $(this).parents('.sns-share'),
+        url = $data.attr('data-url') || location.href,
+        text = encodeURIComponent($data.attr('data-text')) || document.title,
+        title = encodeURIComponent($data.attr('data-title')),
+        img = $data.attr('data-img'),
+        shareto = $(this).attr('data-shareto');
+
+    img = img ? L.qiniu(img) : '';
+    var share_url={
+      weibo: 'http://service.weibo.com/share/share.php?title='+text+'+&url='+url+'&source=bookmark&appkey=2861592023&searchPic=false&pic='+img,
+      qzone: 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?summary='+text+'&url='+url+'&title='+ title+'&pics='+img+'&desc='+text
+    };
+    share_url[shareto] && window.open(share_url[shareto]);
+    return false;
+  })
+  //处理火狐，js链接新窗口打开问题，感谢 @紫心蕊 
+  .on('click','a',function(e){
+      if(hrefForScript($(this).attr('href'))){
+          e.preventDefault();
+      }
+  })
+  //nicescrol
+  .niceScroll({
+      zindex : 2001,
+      cursorborder: '1px solid rgba(255,255,255,.2)',
+      mousescrollstep: 60,
+      railpadding: {
+          right : 1
+      },
+      bouncescroll: true
+  });
+  //动态插入emoji表情样式
+  var str = '';
+  $('#data_emoji').html()
+  .replace(/^\s+|\s+$/g,'')
+  .split(/\s+/)
+  .forEach(function(item,index){
+    str += '.emoji.s_' + item + '{background-position: -' + (index * 25) + 'px 0;}';
+  });
+  $('head').append('<style type="text/css" data-module="emoji">' + str + '</style>');
 });
 
 /**
@@ -202,35 +256,29 @@ define(function (require, exports) {
 function routerHandle(lofox) {
     'use strict';
 	var dom = $('.contlayer'),
-        container = $('.app_container'),
-        $active_page = null,
-        o_active_page = null;
-	//移除老的page dom
-	function removePageDom(callback) {
-		if ($active_page) {
-            var $old = $active_page;
+      container = $('.app_container'),
+      $active_page = null,
+      o_active_page = null;
+	//显示单页dom
+	function getNewPage() {
+		var newDom = $('<div class="page"><div class="l-loading-panel"><span class="l-loading"></span><p>正在加载模块</p></div></div>');
+    //移除老的page dom
+    if ($active_page) {
+      var $old = $active_page;
 			$active_page = null;
 			$old.addClass('fadeOutRight');
 			setTimeout(function () {
 				$old.remove();
-                $('html,body').scrollTop(0);
-                callback && callback();
+        $('html,body').scrollTop(0);
+        newDom.addClass('fadeInLeft page-active');
+        setTimeout(function () {
+          newDom.removeClass('fadeInLeft');
+        }, 500);
 			}, 500);
 		} else {
-            callback && callback();
-        }
-	}
-	//显示单页dom
-	function getNewPage() {
-		var newDom = $('<div class="page"><div class="l-loading-panel"><span class="l-loading"></span><p>正在加载模块</p></div></div>');
-        //移除老的dom
-        removePageDom(function () {
-            container.append(newDom);
-            newDom.addClass('fadeInLeft');
-            setTimeout(function () {
-                newDom.removeClass('fadeInLeft');
-            }, 500);
-        });
+        newDom.addClass('page-active');
+    }
+    container.append(newDom);
 		$active_page = newDom;
 		return newDom;
 	}
@@ -282,22 +330,8 @@ function routerHandle(lofox) {
 		L.nav.setCur('blog');
 		var dom = getNewPage();
 		o_active_page = new L.views.blogDetail(dom, param.id, function (title) {
-            lofox.title(title);
-        });
-	});
-	//作品列表页
-	lofox.set('/opus', function () {
-		this.title('作品_小剧客栈');
-		L.nav.setCur('opus');
-		var dom = getNewPage();
-		o_active_page = new L.views.opusList(dom);
-	});
-	//作品详情页
-	lofox.set('/opus/{id}', function (param) {
-		this.title('作品_小剧客栈');
-		L.nav.setCur('opus');
-		var dom = getNewPage();
-		o_active_page = new L.views.opusDetail(dom, param.id);
+      lofox.title(title);
+    });
 	});
 	//实验室列表页
 	lofox.set('/labs', function () {

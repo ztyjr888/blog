@@ -4,11 +4,11 @@ var app_factory = require('../sys/core/index.js');
 //创建app
 var app = new app_factory();
 
-var singlePage = require('./controller/singlePage.js');
 /**
  * 选择静态、动态视图版本
  *
  */
+var singlePage = require('./controller/singlePage.js');
 function views_select(connect,callback){
 	//cookie有相应字段
 	if(connect.cookie('ui_version') == 'js'){
@@ -65,26 +65,13 @@ app.get('/labs/{name}', function(data,connect){
 	labs.detail(connect,app,data.name);
 });
 
-//作品
-var opus = require('./controller/opus.js');
-app.get('/opus', function(data,connect){
-	views_select(connect,function(){
-		opus.list(connect,app);
-	});
-});
-app.get('/opus/{id}', function(data,connect){
-	views_select(connect,function(){
-		opus.detail(connect,app,data.id);
-	});
-});
-
 //后台
 var admin = require('./controller/admin.js');
 app.get('/admin/*', function(data,connect){
 	admin.render(connect,app);
 });
 
-//用户认证
+//用户登录认证
 var snsLogin = require('./controller/snsLogin.js');
 app.get('/snsLogin/{from}', function(data,connect){
 	if(data.from == 'github'){
@@ -96,6 +83,13 @@ app.get('/snsLogin/{from}', function(data,connect){
 	}
 });
 
+
+//验证码
+var verifycode = require('./controller/verifycode.js');
+app.get('/verifycode', function(data,connect){
+  verifycode.render(connect,app);
+});
+
 /**
  * ajax
  *
@@ -103,6 +97,7 @@ app.get('/snsLogin/{from}', function(data,connect){
 var ajax_user = require('./ajax/user/index'),
     ajax_add_edit = require('./ajax/add&edit.js'),
     ajax_comments = require('./ajax/comments/index.js'),
+    ajax_links = require('./ajax/links/index.js'),
     ajax_del = require('./ajax/del'),
     ajax_user_group = require('./ajax/user/user_group_add&edit'),
     ajax_power = require('./ajax/user/power'),
@@ -124,16 +119,19 @@ var ajax_labs = require('./ajax/labs_get');
 app.get('/ajax/labs', function(data,connect){
 	ajax_labs.render(connect,app);
 });
-//作品
-var ajax_opus = require('./ajax/opus_get');
-app.get('/ajax/opus', function(data,connect){
-	ajax_opus.render(connect,app);
-});
 
 //友情链接
-var ajax_friends = require('./ajax/friends_get');
-app.get('/ajax/friends', function(data,connect){
-	ajax_friends.render(connect,app);
+app.get('/ajax/links/list', function(data,connect){
+	ajax_links.list(connect,app);
+});
+app.get('/ajax/links/detail/{id}', function(data,connect){
+	ajax_links.detail(connect,app,data.id);
+});
+app.get('/ajax/links/add_edit', function(data,connect){
+	ajax_links.add_edit(connect,app,data.id);
+});
+app.get('/ajax/links/post', function(data,connect){
+	ajax_links.post(connect,app,data.id);
 });
 
 //清除缓存

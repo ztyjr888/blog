@@ -30,14 +30,19 @@ function get_list(data,callback){
 		skip_num = parseInt(data['skip'])||0;
 	
 	var resJSON = {
-		'code':1,
-		'limit':limit_num,
-		'skip':skip_num,
+		code: 200,
+		limit: limit_num,
+		skip: skip_num,
 	};
 	
 	var method = mongo.start();
 	method.open({'collection_name':'labs'},function(err,collection){
-      //count the all list
+    if(err){
+      resJSON.code = 500;
+      callback&&callback(resJSON);
+      return
+    }
+    //count the all list
 		collection.count(function(err,count){
 			resJSON['count'] = count;
 			
@@ -58,14 +63,11 @@ function get_list(data,callback){
 }
 function get_detail(data,callback){
 	var data=data,
-		labID = data['id'],
-		//内容格式（html/markdown）
-		content_format = data['content_format'] || 'html';
+		labID = data['id'];
 	
 	var resJSON={
-		'code':1,
-		'id' : labID,
-		'content_format' : content_format
+		code: 200,
+		id : labID
 	};
 	var method = mongo.start();
 	method.open({'collection_name':'labs'},function(err,collection){
@@ -75,15 +77,6 @@ function get_detail(data,callback){
 				resJSON['code'] = 2;
 				resJSON['msg'] = 'could not find this lab ' + labID + ' !';				
 			}else{ 
-				resJSON['detail'] = docs[0];
-				
-				if(content_format == 'html'){
-				//	docs[0].content = markdown.parse(docs[0].content);
-					docs[0].content = converter.makeHtml(docs[0].content);
-				}
-			//	}else if(content_format == 'markdown'){
-					
-			//	}
 				resJSON['detail'] = docs[0];
 			}
 			callback&&callback(resJSON);
